@@ -14,6 +14,8 @@ soroban() {
     echo ""
 }
 
+# Usage:
+#   `random_between_inclusive 10 99`
 random_between_inclusive() {
     lower=$1
 
@@ -32,23 +34,16 @@ random_between_inclusive() {
     echo $x
 }
 
-# Accepts just one parameter indicating the number of digits of a random number to generate
-random() {
-    # Each time $RANDOM is referenced, it expands to a random integer between 0 and 32767.
-    x=$RANDOM
+# Usage:
+#   `random_by_digit_count 2`
+random_by_digit_count() {
+    mod=$(( 10 ** $1 - 1 ))
 
-    mod=$(( 10 ** $1 ))
-
-    # TODO should be between 10 and 99 inclusive
-    # x becomes number between 1 and 99 inclusive
-    x=$(( $x % (mod - 1) + 1))
+    mod_prev=$(( 10 ** ($1 - 1) ))
 
     # This returns the value
-    echo $x
+    echo $(random_between_inclusive $mod_prev $mod)
 }
 
-res=`random 2`
-echo $res
-
-res=`random_between_inclusive 10 99`
+res=`random_by_digit_count 2`
 echo $res
