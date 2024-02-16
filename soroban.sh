@@ -45,5 +45,27 @@ random_by_digit_count() {
     echo $(random_between_inclusive $mod_prev $mod)
 }
 
-res=`random_by_digit_count 2`
-echo $res
+nums=4
+digits=3
+tries=5
+
+for (( i=1 ; i<$tries; i++ )) ; do
+    sum=$(random_by_digit_count $digits)
+    echo " $sum"
+
+    for (( j=1 ; j<$nums; j++ )) ; do
+        tmp=$(random_by_digit_count $digits)
+        echo +$tmp
+        sum=$(( $sum + $tmp ))
+    done
+
+    echo ""
+    read -a answer -p "Answer: " # read input into $answer
+
+    # Check the sum
+    if [[ $answer == $sum ]] ; then
+        echo "correct";
+    else
+        echo ":(";
+    fi
+done
