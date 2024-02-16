@@ -14,6 +14,24 @@ soroban() {
     echo ""
 }
 
+random_between_inclusive() {
+    lower=$1
+
+    upper=$2
+
+    # the number of numbers in the range of possible returns
+    range_count=$(( upper - lower + 1 ))
+
+    # Each time $RANDOM is referenced, it expands to a random integer between 0 and 32767.
+    x=$RANDOM
+
+    # calculation
+    x=$(( x % range_count + $lower ))
+
+    # return the value
+    echo $x
+}
+
 # Accepts just one parameter indicating the number of digits of a random number to generate
 random() {
     # Each time $RANDOM is referenced, it expands to a random integer between 0 and 32767.
@@ -30,4 +48,7 @@ random() {
 }
 
 res=`random 2`
+echo $res
+
+res=`random_between_inclusive 10 99`
 echo $res
