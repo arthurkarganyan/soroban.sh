@@ -48,14 +48,19 @@ random_by_digit_count() {
 nums=4
 digits=3
 tries=5
+sleep_time=3
 
 for (( i=1 ; i<$tries; i++ )) ; do
     sum=$(random_by_digit_count $digits)
     echo " $sum"
+    $(say $sum)
+    sleep $sleep_time
 
     for (( j=1 ; j<$nums; j++ )) ; do
         tmp=$(random_by_digit_count $digits)
         echo +$tmp
+        $(say "+$tmp")
+        sleep $sleep_time
         sum=$(( $sum + $tmp ))
     done
 
@@ -64,8 +69,11 @@ for (( i=1 ; i<$tries; i++ )) ; do
 
     # Check the sum
     if [[ $answer == $sum ]] ; then
+        say "yes"
         echo "correct";
     else
+        say "no"
         echo ":(";
     fi
+    echo ""
 done
