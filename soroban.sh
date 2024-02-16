@@ -14,11 +14,20 @@ soroban() {
     echo ""
 }
 
-# The special parameter ‘#’ that expands to the number of positional parameters is updated to reflect the change.
+# Accepts just one parameter indicating the number of digits of a random number to generate
 random() {
-    return "a"
-    # $RANDOM
+    # Each time $RANDOM is referenced, it expands to a random integer between 0 and 32767.
+    x=$RANDOM
+
+    mod=$(( 10 ** $1 ))
+
+    # TODO should be between 10 and 99 inclusive
+    # x becomes number between 1 and 99 inclusive
+    x=$(( $x % (mod - 1) + 1))
+
+    # This returns the value
+    echo $x
 }
 
-# random()
-# echo $RANDOM # Each time this parameter is referenced, it expands to a random integer between 0 and 32767.
+res=`random 2`
+echo $res
