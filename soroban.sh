@@ -3,7 +3,35 @@
 # Comments:
 # The special parameter ‘#’ that expands to the number of positional parameters is updated to reflect the change.
 
-# TODO getopts.sh
+# Initialize our variables
+print_help=0
+digits=3
+sleep_time=3
+
+# Parse options
+while getopts "hd:s:" opt; do
+  case ${opt} in
+    h ) # process option h for help
+      print_help=1 ;;
+    d ) # process digits option
+      digits=$OPTARG ;;
+    s ) # process sleep option
+      sleep_time=$OPTARG ;;
+    \? ) # Invalid option or missing argument
+      echo "Usage: cmd [-h] [-d digits] [-s sleep time]"
+      exit 1 ;;
+  esac
+done
+
+# Check if the user asked for help
+if [[ $print_help -eq 1 ]]; then
+  echo "Usage: cmd [-h] [-d digits] [-s sleep time]"
+  echo "-h        Display this help message."
+  echo "-d digits Specify the number of digits."
+  echo "-s sleep  Specify sleep time after each number."
+  exit 0
+fi
+
 soroban() {
     # -n numbers, default = 10
     # -d digits, default = 1
@@ -50,9 +78,7 @@ random_by_digit_count() {
 }
 
 nums=4
-digits=3
 tries=5
-sleep_time=3
 
 for (( i=1 ; i<$tries; i++ )) ; do
     sum=$(random_by_digit_count $digits)
