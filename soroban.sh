@@ -71,6 +71,10 @@ for (( i=1 ; i<$tries; i++ )) ; do
     echo ""
     read -a answer -p "Answer: " # read input into $answer
 
+    if [[ $answer == q ]] ; then
+        exit 0
+    fi
+
     # Check the sum
     if [[ $answer == $sum ]] ; then
         say "yes"
