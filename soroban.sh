@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# Comments:
+# The special parameter ‘#’ that expands to the number of positional parameters is updated to reflect the change.
+
+# TODO getopts.sh
 soroban() {
     # -n numbers, default = 10
     # -d digits, default = 1
