@@ -94,6 +94,7 @@ for (( i=1 ; i<$tries; i++ )) ; do
         sum=$(( $sum + $tmp ))
     done
 
+    say "answer"
     echo ""
     read -a answer -p "Answer: " # read input into $answer
 
