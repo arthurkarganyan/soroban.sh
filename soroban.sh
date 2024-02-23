@@ -9,6 +9,7 @@ digits=3
 sleep_time=3
 nums=5
 rows=5
+usage="Usage: cmd [-h] [-d digits] [-s sleep time] [-n nums] [-r rows]"
 
 # Parse options
 while getopts "hn:d:s:r:" opt; do
@@ -24,14 +25,14 @@ while getopts "hn:d:s:r:" opt; do
     r ) # process rows option
       rows=$OPTARG ;;
     \? ) # Invalid option or missing argument
-      echo "Usage: cmd [-h] [-d digits] [-s sleep time]"
+      echo $usage
       exit 1 ;;
   esac
 done
 
 # Check if the user asked for help
 if [[ $print_help -eq 1 ]]; then
-  echo "Usage: cmd [-h] [-d digits] [-s sleep time]"
+  echo $usage
   echo "-h        Display this help message."
   echo "-d digits Specify the number of digits."
   echo "-n nums   Specify the number of numbers in a row."
