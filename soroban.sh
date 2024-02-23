@@ -8,9 +8,10 @@ print_help=0
 digits=3
 sleep_time=3
 nums=5
+rows=5
 
 # Parse options
-while getopts "hn:d:s:" opt; do
+while getopts "hn:d:s:r:" opt; do
   case ${opt} in
     h ) # process option h for help
       print_help=1 ;;
@@ -20,6 +21,8 @@ while getopts "hn:d:s:" opt; do
       nums=$OPTARG ;;
     s ) # process sleep option
       sleep_time=$OPTARG ;;
+    r ) # process rows option
+      rows=$OPTARG ;;
     \? ) # Invalid option or missing argument
       echo "Usage: cmd [-h] [-d digits] [-s sleep time]"
       exit 1 ;;
@@ -31,7 +34,8 @@ if [[ $print_help -eq 1 ]]; then
   echo "Usage: cmd [-h] [-d digits] [-s sleep time]"
   echo "-h        Display this help message."
   echo "-d digits Specify the number of digits."
-  echo "-n nums   Specify the number of numbers."
+  echo "-n nums   Specify the number of numbers in a row."
+  echo "-r rows   Specify the number of rows."
   echo "-s sleep  Specify sleep time after each number."
   exit 0
 fi
@@ -81,9 +85,7 @@ random_by_digit_count() {
     echo $(random_between_inclusive $mod_prev $mod)
 }
 
-tries=5
-
-for (( i=1 ; i<$tries; i++ )) ; do
+for (( i=0 ; i<$rows; i++ )) ; do
     sum=$(random_by_digit_count $digits)
     echo " $sum"
     $(say $sum)
