@@ -9,10 +9,11 @@ digits=3
 sleep_time=3
 nums=5
 rows=5
-usage="Usage: cmd [-h] [-d digits] [-s sleep time] [-n nums] [-r rows]"
+usage="Usage: cmd [-h] [-d digits] [-s sleep time] [-n nums] [-r rows] [-m multiply]"
+multiply=""
 
 # Parse options
-while getopts "hn:d:s:r:" opt; do
+while getopts "hmn:d:s:r:" opt; do
   case ${opt} in
     h ) # process option h for help
       print_help=1 ;;
@@ -24,6 +25,8 @@ while getopts "hn:d:s:r:" opt; do
       sleep_time=$OPTARG ;;
     r ) # process rows option
       rows=$OPTARG ;;
+    m )
+      multiply=t ;;
     \? ) # Invalid option or missing argument
       echo $usage
       exit 1 ;;
@@ -33,11 +36,12 @@ done
 # Check if the user asked for help
 if [[ $print_help -eq 1 ]]; then
   echo $usage
-  echo "-h        Display this help message."
-  echo "-d digits Specify the number of digits."
-  echo "-n nums   Specify the number of numbers in a row."
-  echo "-r rows   Specify the number of rows."
-  echo "-s sleep  Specify sleep time after each number."
+  echo "-h           Display this help message."
+  echo "-d digits    Specify the number of digits."
+  echo "-n nums      Specify the number of numbers in a row."
+  echo "-r rows      Specify the number of rows."
+  echo "-s sleep     Specify sleep time after each number."
+  echo "-m multiply  A flag for multiplication training."
   exit 0
 fi
 
@@ -73,6 +77,13 @@ random_by_digit_count() {
 }
 
 for (( i=0 ; i<$rows; i++ )) ; do
+  if [ -n "$multiply" ]; then
+    a=$(random_by_digit_count $digits)
+    b=$(random_between_inclusive 2 9)
+    sum=$(($a * $b))
+    echo "$a*$b"
+    say "$a times $b"
+  else
     sum=$(random_by_digit_count $digits)
     echo " $sum"
     $(say $sum)
@@ -85,6 +96,7 @@ for (( i=0 ; i<$rows; i++ )) ; do
         sleep $sleep_time
         sum=$(( $sum + $tmp ))
     done
+  fi
 
     say "answer"
     echo ""
