@@ -48,32 +48,32 @@ fi
 # Usage:
 #   `random_between_inclusive 10 99`
 random_between_inclusive() {
-    lower=$1
+  lower=$1
 
-    upper=$2
+  upper=$2
 
-    # the number of numbers in the range of possible returns
-    range_count=$(( upper - lower + 1 ))
+  # the number of numbers in the range of possible returns
+  range_count=$(( upper - lower + 1 ))
 
-    # Each time $RANDOM is referenced, it expands to a random integer between 0 and 32767.
-    x=$RANDOM
+  # Each time $RANDOM is referenced, it expands to a random integer between 0 and 32767.
+  x=$RANDOM
 
-    # calculation
-    x=$(( x % range_count + $lower ))
+  # calculation
+  x=$(( x % range_count + $lower ))
 
-    # return the value
-    echo $x
+  # return the value
+  echo $x
 }
 
 # Usage:
 #   `random_by_digit_count 2`
 random_by_digit_count() {
-    mod=$(( 10 ** $1 - 1 ))
+  mod=$(( 10 ** $1 - 1 ))
 
-    mod_prev=$(( 10 ** ($1 - 1) ))
+  mod_prev=$(( 10 ** ($1 - 1) ))
 
-    # This returns the value
-    echo $(random_between_inclusive $mod_prev $mod)
+  # This returns the value
+  echo $(random_between_inclusive $mod_prev $mod)
 }
 
 for (( i=0 ; i<$rows; i++ )) ; do
@@ -90,29 +90,29 @@ for (( i=0 ; i<$rows; i++ )) ; do
     sleep $sleep_time
 
     for (( j=1 ; j<$nums; j++ )) ; do
-        tmp=$(random_by_digit_count $digits)
-        echo +$tmp
-        $(say "+$tmp")
-        sleep $sleep_time
-        sum=$(( $sum + $tmp ))
+      tmp=$(random_by_digit_count $digits)
+      echo +$tmp
+      $(say "+$tmp")
+      sleep $sleep_time
+      sum=$(( $sum + $tmp ))
     done
   fi
 
-    say "answer"
-    echo ""
-    read -a answer -p "Answer: " # read input into $answer
+  say "answer"
+  echo ""
+  read -a answer -p "Answer: " # read input into $answer
 
-    if [[ $answer == q ]] ; then
-        exit 0
-    fi
+  if [[ $answer == q ]] ; then
+    exit 0
+  fi
 
-    # Check the sum
-    if [[ $answer == $sum ]] ; then
-        say "yes"
-        echo "correct";
-    else
-        say "no"
-        echo ":(";
-    fi
-    echo ""
+  # Check the sum
+  if [[ $answer == $sum ]] ; then
+    say "yes"
+    echo "correct";
+  else
+    say "no"
+    echo ":(";
+  fi
+  echo ""
 done
